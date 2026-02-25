@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Corporativos | Los Álamos</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png?v=1.1">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Urbanist:wght@300;400;600;700&family=Fira+Code:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* FONDO Y TEXTURA DE MADERA */
+        body, main { 
+            background-color: #F2EFE9 !important; 
+            color: #2C3E36 !important; 
+            margin: 0;
+        }
+
+        .seccion-corp-textura {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 180px 5% 100px;
+            max-width: 1300px;
+            margin: 0 auto;
+            gap: 60px;
+            min-height: 90vh;
+            background-color: #F2EFE9;
+        }
+
+        .seccion-corp-textura::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            background-image: 
+                repeating-linear-gradient(88deg, transparent 0px, transparent 2px, rgba(80, 50, 30, 0.03) 2px, rgba(80, 50, 30, 0.03) 3px),
+                repeating-linear-gradient(92deg, transparent 0px, transparent 6px, rgba(160, 100, 60, 0.02) 6px, rgba(160, 100, 60, 0.02) 10px);
+        }
+
+        .texto-columna, .video-container-corp, .scroll-trigger-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* VIDEO VERTICAL GIGANTE SIN SOMBRA */
+        .marco-video-vertical {
+            width: 100%;
+            height: 750px;
+            max-width: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: none !important;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .marco-video-vertical video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* BOTÓN CÍRCULO "VER MÁS" */
+        .scroll-trigger-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0;
+            width: 100%;
+        }
+
+        .circle-btn {
+            width: 110px;
+            height: 110px;
+            border: 1px solid #C06C46;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .circle-btn:hover {
+            background-color: #C06C46;
+            transform: scale(1.1);
+        }
+
+        .circle-btn span { color: #C06C46; font-size: 1.5rem; transition: 0.3s; }
+        .circle-btn p { color: #C06C46; font-size: 0.8rem; margin: 0; font-family: 'Urbanist'; transition: 0.3s; }
+        
+        .circle-btn:hover span, .circle-btn:hover p { color: #F2EFE9; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* MENSAJE REVELADO */
+        .mensaje-reveal {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1.5s ease-in-out;
+            text-align: center;
+        }
+
+        .frase-corporativa {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            line-height: 1.4;
+            color: #1A2621;
+            padding: 100px 15%;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        .reveal-active { max-height: 1200px; }
+        .reveal-active .frase-corporativa { opacity: 1; }
+
+        @media (max-width: 1024px) {
+            .seccion-corp-textura { flex-direction: column; text-align: center; padding-top: 150px; }
+            .marco-video-vertical { height: 550px; max-width: 380px; }
+            .frase-corporativa { font-size: 1.8rem; padding: 60px 10%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo-area">
+                <a href="index.html"><img src="assets/logo.png" alt="Logo Los Álamos" class="logo-img"></a>
+            </div>
+            <nav class="nav-menu">
+                <div class="close-btn">×</div>
+                <a href="index.html#hero" class="nav-link">Inicio</a>
+                <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+                <a href="index.html#experiencia" class="nav-link">Experiencia</a>
+                <a href="carta.html" class="nav-link">Carta</a>
+                <a href="corporativo.html" class="nav-link activo" style="color: #C06C46 !important; font-weight: bold;">Eventos Corporativos</a>
+                <a href="https://api.whatsapp.com/send/?phone=51969898911" class="nav-link" style="color: #C06C46 !important; font-weight: bold;">Reservar Mesa</a>
+            </nav>
+            <div class="header-actions">
+                <a href="https://api.whatsapp.com/send/?phone=51969898911" class="btn-pill" target="_blank">Reservar Mesa</a>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="seccion-corp-textura">
+            <div class="texto-columna" style="flex: 1;">
+                <span class="etiqueta-deco" style="border-color: #C06C46; color: #C06C46;">Propuesta Empresarial</span>
+                <h1 style="font-size: 4rem; font-family: 'DM Serif Display'; margin-bottom: 30px;">El espacio ideal<br>para tu equipo</h1>
+                <p style="font-size: 1.25rem; margin-bottom: 40px; font-family: 'Urbanist', sans-serif; line-height: 1.8; color: #2C3E36;">
+    Sal de la rutina de la oficina. En Los Álamos de Pilcomayo ofrecemos un entorno natural y exclusivo, diseñado para fortalecer lazos y celebrar los logros de tu empresa.<br><br>
+    Disfruta de la mejor gastronomía del Valle del Mantaro con atención personalizada. Espacios versátiles donde la tranquilidad y el buen servicio potencian la motivación de tu equipo.
+</p>
+                <a href="https://wa.me/51969898911" target="_blank" class="btn-primary" style="background-color: #C06C46; color: #fff; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold;">Cotizar Evento 💬</a>
+            </div>
+
+            <div class="video-container-corp" style="flex: 1; display: flex; justify-content: center;">
+                <div class="marco-video-vertical"> 
+                    <video autoplay muted loop playsinline src="assets/video-evento-corporativo.mp4"></video>
+                </div>
+            </div>
+        </section>
+
+        <div class="scroll-trigger-container">
+            <div class="circle-btn" onclick="activarExperiencia()">
+                <span>↓</span>
+                <p>Ver más...</p>
+            </div>
+        </div>
+
+        <div id="mensaje-extendido" class="mensaje-reveal" style="background: linear-gradient(to bottom, #F2EFE9 0%, #f2ebd6 5%, #f2ebd6 95%, #F2EFE9 100%); padding: 80px 5%;">
+    
+    <p class="frase-corporativa" style="position: relative; z-index: 2; font-size: 2.5rem; margin-bottom: 20px; color: #1A2621;">
+        "En Los Álamos de Pilcomayo transformamos el concepto del almuerzo corporativo en una herramienta estratégica de alto nivel, donde la tranquilidad de nuestro entorno y la excelencia de la mejor gastronomía del valle se fusionan para crear el clima perfecto donde las ideas fluyen, los acuerdos se consolidan y los equipos de trabajo encuentran la inspiración necesaria para alcanzar sus metas más ambiciosas."
+    </p>
+
+<video 
+    id="video-logo-anim"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+    style="width:100%; max-width:400px; display:block; margin:40px auto 0 auto;">
+    
+    <source src="assets/animacion.mp4" type="video/mp4">
+</video>
+</div>
+
+        <audio id="audio-corp" src="assets/ambiente-corporativo.mp3"></audio>
+
+        <div class="footer-divider-montana" style="margin-top: -2px;">
+             <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="mountain-base" fill="#F2EFE9" d="M0,120 L0,40 Q300,100 600,50 Q900,0 1200,60 L1200,120 Z"/>
+                <path class="mountain-texture" stroke="rgba(0,0,0,0.05)" d="M150,85 Q350,105 550,70" />
+            </svg>
+        </div>
+
+        <footer id="contacto" class="footer-section">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col brand-col">
+                        <img src="assets/logo.png" alt="Los Álamos" class="footer-logo" style="filter: brightness(0) invert(1);"> 
+                        <p class="footer-desc" style="color: #F2EFE9;">
+                            Tradición, naturaleza y sabor inconfundible. El refugio gastronómico de Pilcomayo.
+                        </p>
+                    </div>
+
+                    <div class="footer-col links-col">
+                        <h3 style="color: #C06C46;">Explorar</h3>
+                        <ul>
+                            <li><a href="index.html#hero" style="color: #F2EFE9;">Inicio</a></li>
+                            <li><a href="index.html#nosotros" style="color: #F2EFE9;">Historia</a></li>
+                            <li><a href="carta.html" style="color: #F2EFE9;">Carta</a></li>
+                            <li><a href="https://wa.me/51969898911" style="color: #F2EFE9;">Reservas</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col contact-col" style="color: #F2EFE9;">
+                        <h3 style="color: #C06C46;">Visítanos</h3>
+                        <div class="contact-item icon-loc">
+                            <p>Av. Las Américas 1080<br>Cruce de Pilcomayo, Perú</p>
+                        </div>
+                        <div class="contact-item icon-tel">
+                            <p><a href="tel:+51969898911" style="color: #F2EFE9;">+51 969 898 911</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding: 20px 0; display: flex; justify-content: space-between;">
+                    <p class="copyright" style="color: rgba(255,255,255,0.6);">© 2026 Los Álamos de Pilcomayo. Todos los derechos reservados.</p>
+                    <div class="social-links-minimal">
+                        <a href="#" style="color: rgba(255,255,255,0.6); margin-left: 15px;">Facebook</a>
+                        <a href="#" style="color: rgba(255,255,255,0.6); margin-left: 15px;">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function activarExperiencia() {
+            const audio = document.getElementById('audio-corp');
+            audio.play().catch(e => console.log("Audio esperando interacción"));
+            
+            const mensaje = document.getElementById('mensaje-extendido');
+            mensaje.classList.add('reveal-active');
+            
+            setTimeout(() => {
+                mensaje.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        const closeBtn = document.querySelector(".close-btn");
+
+        hamburger.addEventListener("click", () => navMenu.classList.add("active"));
+        closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    </script>
+</body>
+</html>

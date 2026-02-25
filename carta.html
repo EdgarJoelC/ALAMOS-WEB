@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Carta | Los Álamos</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="icon" type="image/png" href="assets/favicon.png?v=1.1">
+</head>
+<body class="body-carta">
+
+    <div class="fondo-carta">
+        <div class="capa-oscura"></div>
+    </div>
+
+    <a href="index.html" class="btn-volver-esquina">
+        <i class="ph ph-arrow-left"></i> Volver al Inicio
+    </a>
+
+    <audio id="audio-ambiente">
+        <source src="assets/audio-carta.mp3" type="audio/mpeg">
+    </audio>
+
+    <main class="main-carta">
+        <div class="visor-menu">
+            
+            <img id="imagen-actual" src="assets/menu-pag1.jpg" alt="Carta Los Álamos" class="imagen-papel">
+
+            <button id="btn-left" class="nav-arrow left" onclick="moverPagina(-1)">
+                <i class="ph ph-caret-left"></i>
+            </button>
+            
+            <button id="btn-right" class="nav-arrow right" onclick="moverPagina(1)">
+                <i class="ph ph-caret-right"></i>
+            </button>
+
+            <div class="paginacion-indicador">
+                Pág <span id="num-pag">1</span> / 8
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // CONFIGURACIÓN: Tus 8 imágenes
+        const paginas = [
+            "assets/menu-pag1.jpg", // Portada
+            "assets/menu-pag2.jpg",
+            "assets/menu-pag3.jpg",
+            "assets/menu-pag4.jpg",
+            "assets/menu-pag5.jpg",
+            "assets/menu-pag6.jpg",
+            "assets/menu-pag7.jpg",
+            "assets/menu-pag8.jpg"  // Final
+        ];
+
+        let indiceActual = 0;
+        const audio = document.getElementById('audio-ambiente');
+        const imgElement = document.getElementById('imagen-actual');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        const numPag = document.getElementById('num-pag');
+
+        // Función Principal: Mover Página
+        function moverPagina(direccion) {
+            
+            // LÓGICA DE AUDIO: Solo se activa si estamos en la Pág 1 y vamos a la derecha
+            if (indiceActual === 0 && direccion === 1) {
+                // Intentamos reproducir. Si el navegador deja, sonará.
+                audio.volume = 0.6;
+                audio.play().catch(e => console.log("Audio requiere interacción previa"));
+            }
+
+            // Actualizar índice
+            indiceActual += direccion;
+
+            // Actualizar Imagen con efecto
+            imgElement.style.opacity = 0.5;
+            setTimeout(() => {
+                imgElement.src = paginas[indiceActual];
+                imgElement.style.opacity = 1;
+                numPag.textContent = indiceActual + 1;
+                
+                // Actualizar qué botones se ven
+                actualizarBotones();
+            }, 200);
+        }
+
+        // Función para mostrar/ocultar flechas según la página
+        function actualizarBotones() {
+            // Botón Izquierda: Oculto si estamos en la Pág 1 (índice 0)
+            if (indiceActual === 0) {
+                btnLeft.style.display = 'none';
+            } else {
+                btnLeft.style.display = 'flex';
+            }
+
+            // Botón Derecha: Oculto si estamos en la última Pág (índice 7)
+            if (indiceActual === paginas.length - 1) {
+                btnRight.style.display = 'none';
+            } else {
+                btnRight.style.display = 'flex';
+            }
+        }
+
+        // Ejecutar al inicio para asegurar que el botón izquierdo no aparezca
+        actualizarBotones();
+
+    </script>
+</body>
+</html>
