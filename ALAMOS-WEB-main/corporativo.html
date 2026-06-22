@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Corporativos | Los Álamos</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png?v=1.1">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* --- ESTILOS BASE (BEIGE UNIFICADO) --- */
+        body, main { 
+            background-color: #f2ebd6 !important; 
+            color: #2C3E36 !important; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- TIPOGRAFÍAS --- */
+        h1, h2, h3 { 
+            font-family: 'DM Serif Display', serif !important; 
+            font-weight: 400;
+        }
+        p, a, span, li, div { font-family: 'Urbanist', sans-serif !important; }
+
+        /* --- DECO RÚSTICA MEJORADA --- */
+        .deco-rustica-mini {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.25;
+        }
+        .t-xs { width: 45px; } .t-sm { width: 85px; } .t-md { width: 130px; }
+
+        /* --- HERO SECTION --- */
+        .hero-corp-fullscreen {
+            position: relative;
+            width: 100%;
+            min-height: 110vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 8%;
+            overflow: hidden;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.65);
+            object-position: center 60%;
+        }
+
+        .contenedor-bloques {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 530px;
+        }
+
+        .bloque-blanco {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.12);
+            animation: slideIn 1.2s ease-out;
+        }
+
+        .etiqueta-bloque {
+            color: #C06C46;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .bloque-blanco h1 {
+            font-size: 3.2rem;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+            color: #1A2621;
+        }
+
+        .bloque-blanco p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .btn-corp-solid {
+            background-color: #C06C46;
+            color: white !important;
+            padding: 18px 35px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-corp-solid:hover {
+            background-color: #1A2621;
+            transform: translateY(-3px);
+        }
+
+        /* --- SECCIÓN DE CARDS DE EVENTOS (BEIGE) --- */
+        .seccion-servicios-grid {
+            padding: 80px 8%;
+            background-color: #f2ebd6;
+            position: relative;
+        }
+
+        .eventos-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card-evento {
+            position: relative;
+            height: 480px;
+            border-radius: 4px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card-evento:hover { transform: translateY(-8px); }
+
+        .card-evento img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            filter: brightness(0.7);
+        }
+
+        .card-evento:hover img { transform: scale(1.1); filter: brightness(0.5); }
+
+        .card-evento-info {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px 30px;
+            background: linear-gradient(transparent, rgba(26, 38, 33, 0.9));
+            color: white;
+            z-index: 2;
+        }
+
+        .card-evento-info h3 {
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-evento-info p {
+            font-size: 0.95rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.5s ease;
+            color: #EBCB6C;
+        }
+
+        .card-evento:hover .card-evento-info p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- BOTÓN VER MÁS Y DESPLIEGUE --- */
+        .scroll-trigger-container {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+            width: 100%;
+        }
+
+        .circle-btn {
+            width: 110px; height: 110px;
+            border: 1px solid #C06C46;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: bounce 2s infinite;
+            background: transparent;
+        }
+
+        .circle-btn:hover { background-color: #C06C46; }
+        .circle-btn span { color: #C06C46; font-size: 1.5rem; transition: 0.3s; }
+        .circle-btn p { color: #C06C46; font-size: 0.8rem; margin: 0; transition: 0.3s; }
+        .circle-btn:hover span, .circle-btn:hover p { color: white; }
+
+        .mensaje-reveal {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            background-color: #f2ebd6; 
+        }
+
+        .reveal-active {
+            max-height: 1200px;
+            opacity: 1;
+            visibility: visible;
+            padding: 100px 5%;
+        }
+
+        .frase-corporativa {
+            font-family: 'DM Serif Display', serif !important; 
+            font-style: italic; 
+            font-size: 2.4rem;
+            line-height: 1.4;
+            color: #1A2621;
+            padding: 0 10%;
+            margin-bottom: 40px;
+        }
+
+        /* --- 5. MONTAÑA Y FOOTER ORIGINALES CON ANIMACIÓN --- */
+        .footer-divider-montana { width: 100%; line-height: 0; margin-top: -5px; position: relative; z-index: 10; }
+        .footer-divider-montana svg { width: 100%; height: 80px; display: block; }
+        .mountain-base { fill: #1A2621; } 
+        .mountain-texture { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 1; }
+
+        footer.footer-section { background-color: #1A2621; color: white; padding: 40px 5% 20px; position: relative; z-index: 10; }
+        footer.footer-section a { color: inherit !important; text-decoration: none; }
+
+        .social-links-minimal a, .links-col a {
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+        .social-links-minimal a:hover, .links-col a:hover { opacity: 1; }
+        
+        /* Animación de línea blanca */
+        .social-links-minimal a::after, .links-col a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -3px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .social-links-minimal a:hover::after, .links-col a:hover::after { width: 100%; }
+
+        .footer-desc { max-width: 300px; line-height: 1.6; }
+        .links-col h3, .contact-col h3 { color: #C06C46; margin-bottom: 20px; font-size: 1.3rem; }
+        .social-links-minimal { display: flex; gap: 20px; flex-wrap: wrap; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        @media (max-width: 1024px) {
+            .hero-corp-fullscreen { padding-left: 5%; padding-right: 5%; justify-content: center; }
+            .bloque-blanco h1 { font-size: 2.2rem; }
+            .eventos-cards-container { grid-template-columns: 1fr; }
+            .frase-corporativa { font-size: 1.7rem; padding: 0 5%; }
+            .deco-rustica-mini { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo-area">
+                <a href="index.html"><img src="assets/logo.png" alt="Logo Los Álamos" class="logo-img"></a>
+            </div>
+            <nav class="nav-menu">
+                <div class="close-btn">×</div>
+                <a href="index.html#hero" class="nav-link">Inicio</a>
+                <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+                <a href="index.html#experiencia" class="nav-link">Experiencia</a>
+                <a href="carta.html" class="nav-link">Carta</a>
+                <a href="corporativo.html" class="nav-link activo">Eventos Corporativos</a>
+            </nav>
+            <div class="header-actions">
+                <a href="https://api.whatsapp.com/send/?phone=51969898911" class="btn-pill" target="_blank">Reservar Mesa</a>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-corp-fullscreen">
+            <div class="deco-rustica-mini t-md" style="top: 15%; right: 5%; transform: rotate(15deg);">
+                <svg viewBox="0 0 100 120" fill="none" stroke="#C06C46" stroke-width="1.2"><path d="M50,110 V10 M50,30 L40,15 M50,30 L60,15 M50,55 L40,40 M50,55 L60,40" /></svg>
+            </div>
+
+            <video autoplay muted loop playsinline class="video-bg">
+                <source src="assets/video-evento-corporativo.mp4" type="video/mp4">
+            </video>
+
+            <div class="contenedor-bloques">
+                <div class="bloque-blanco">
+                    <span class="etiqueta-bloque">Propuesta Empresarial</span>
+                    <h1>El espacio ideal<br>para tu equipo</h1>
+                    <p>Sal de la rutina de la oficina. En Los Álamos de Pilcomayo ofrecemos un entorno natural exclusivo para fortalecer lazos y celebrar logros.</p>
+                </div>
+
+                <div class="bloque-blanco chico" style="animation-delay: 0.3s;">
+                    <p>Atención personalizada y espacios versátiles donde la tranquilidad potencia la motivación de tu equipo.</p>
+                    <a href="https://wa.me/51969898911" target="_blank" class="btn-corp-solid">Cotizar ahora 💬</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-servicios-grid">
+            <div class="deco-rustica-mini t-sm" style="top: -40px; left: 10%;"><svg viewBox="0 0 60 100" fill="none" stroke="#C06C46" stroke-width="1"><path d="M30,100 V10 M30,30 L15,15 M30,30 L45,15" /></svg></div>
+
+            <div style="text-align: center; margin-bottom: 50px;">
+                <span class="etiqueta-bloque">Nuestra Especialidad</span>
+                <h2 style="font-size: 3.5rem;">Celebraciones que inspiran</h2>
+                <div class="linea-creciente" style="background-color: #C06C46; margin: 20px auto;"></div>
+            </div>
+
+            <div class="eventos-cards-container">
+                
+                <a href="https://wa.me/51969898911?text=Hola,%20quisiera%20cotizar%20un%20ALMUERZO%20CORPORATIVO%20en%20Los%20Álamos." class="card-evento" target="_blank">
+                    <img src="assets/DSC01380 (1).jpg" alt="Almuerzo Corporativo">
+                    <div class="card-evento-info">
+                        <h3>Almuerzo Corporativo</h3>
+                        <p>Conecta a tu equipo en el mejor entorno natural del valle.</p>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/51969898911?text=Hola,%20quisiera%20información%20para%20celebrar%20un%20ANIVERSARIO%20en%20Los%20Álamos." class="card-evento" target="_blank">
+                    <img src="assets/a.png" alt="Aniversario">
+                    <div class="card-evento-info">
+                        <h3>Aniversarios</h3>
+                        <p>Celebra los años de éxito con una cena elegante y rústica.</p>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/51969898911?text=Hola,%20quisiera%20cotizar%20mi%20BODA%20en%20Los%20Álamos." class="card-evento" target="_blank">
+                    <img src="assets/DSC01380 (1).jpg" alt="Bodas">
+                    <div class="card-evento-info">
+                        <h3>Bodas Soñadas</h3>
+                        <p>El escenario perfecto para el "sí, acepto" rodeado de naturaleza.</p>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/51969898911?text=Hola,%20tengo%20una%20consulta%20para%20un%20evento%20especial%20en%20Los%20Álamos." class="card-evento" target="_blank">
+                    <img src="assets/98 (1) (1).jpg" alt="Otros Eventos">
+                    <div class="card-evento-info">
+                        <h3>Otros Eventos</h3>
+                        <p>Cumpleaños, baby showers y reuniones a medida.</p>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <div class="scroll-trigger-container">
+            <div class="circle-btn" onclick="activarExperiencia()">
+                <span>↓</span>
+                <p>Ver más...</p>
+            </div>
+        </div>
+
+        <div id="mensaje-extendido" class="mensaje-reveal">
+            <p class="frase-corporativa">
+                "En Los Álamos de Pilcomayo transformamos el almuerzo corporativo en una herramienta estratégica, donde la tranquilidad del valle y nuestra gastronomía se fusionan para que las ideas fluyan."
+            </p>
+
+            <video id="video-logo-anim" autoplay muted playsinline preload="auto" style="width:100%; max-width:400px; display:block; margin:0 auto;">
+                <source src="assets/animacion.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <audio id="audio-corp" src="assets/ambiente-corporativo.mp3"></audio>
+
+        <div class="footer-divider-montana seccion-superpuesta">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="mountain-base" d="M0,120 L0,40 Q300,100 600,50 Q900,0 1200,60 L1200,120 Z"/>
+                <path class="mountain-texture" d="M150,85 Q350,105 550,70" />
+                <path class="mountain-texture" d="M700,45 Q900,20 1100,55" />
+                <path class="mountain-texture" d="M850,30 Q950,5 1050,35" />
+            </svg>
+        </div>
+
+        <footer id="contacto" class="footer-section seccion-superpuesta">
+            <div class="contenedor-interno">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;">
+                    <div class="footer-col brand-col">
+                        <img src="assets/logo.png" alt="Los Álamos" style="width: 150px; filter: brightness(0) invert(1);">
+                        <p class="footer-desc" style="opacity: 0.7; margin-top: 15px; line-height: 1.6;">
+                            Tradición, naturaleza y sabor inconfundible. El refugio gastronómico de Pilcomayo.
+                        </p>
+                    </div>
+
+                    <div class="footer-col links-col">
+                        <h3 style="color: #C06C46; margin-bottom: 15px;">Explorar</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li><a href="#hero" style="color: white; text-decoration: none;">Inicio</a></li>
+                            <li><a href="#nosotros" style="color: white; text-decoration: none;">Historia</a></li>
+                            <li><a href="carta.html" style="color: white; text-decoration: none;">Carta</a></li>
+                            <li><a href="#experiencia" style="color: white; text-decoration: none;">Experiencia</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col contact-col">
+                        <h3 style="color: #C06C46; margin-bottom: 15px;">Visítanos</h3>
+                        <div style="margin-bottom: 15px;">
+                            <p><strong>📍 Dirección:</strong> Av. Las Américas 1080<br>Cruce de Pilcomayo, Perú</p>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <p><strong>📞 Teléfono:</strong> <a href="tel:+51969898911" style="color: white; text-decoration: none; font-weight: bold;">+51 969 898 911</a></p>
+                        </div>
+                        <div>
+                            <p><strong>✉️ Correo:</strong> <a href="mailto:losalamosdepilcomayo@gmail.com" style="color: white; text-decoration: none;">losalamos@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <p style="opacity: 0.5; margin: 0;">© 2026 Los Álamos de Pilcomayo. Todos los derechos reservados.</p>
+                    
+                    <div class="social-links-minimal">
+                        <a href="https://www.facebook.com/alamosdepilcomayo" target="_blank" rel="noopener noreferrer">Facebook</a>
+                        <a href="https://www.instagram.com/alamosdepilcomayo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="https://www.tiktok.com/@losalamosdepilcomayo" target="_blank" rel="noopener noreferrer">TikTok</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function activarExperiencia() {
+            const audio = document.getElementById('audio-corp');
+            audio.play().catch(e => console.log("Audio esperando interacción"));
+            
+            const mensaje = document.getElementById('mensaje-extendido');
+            mensaje.classList.add('reveal-active');
+            
+            setTimeout(() => {
+                mensaje.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        const closeBtn = document.querySelector(".close-btn");
+        hamburger.addEventListener("click", () => navMenu.classList.add("active"));
+        closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    </script>
+</body>
+</html>

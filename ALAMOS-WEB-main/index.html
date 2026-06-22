@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Disfruta de la mejor Pachamanca, Carnero al Palo y platos típicos en un entorno natural único en Pilcomayo, Huancayo. ¡Reserva hoy!">
+    <title>Los Álamos | Restaurant Turístico en Pilcomayo - Huancayo</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png?v=1.1">
+    
+    <style>
+        /* --- 1. TIPOGRAFÍAS CORRECTAS Y FONDO DINÁMICO --- */
+        body { 
+            background-color: #F2EFE9; 
+            margin: 0; 
+            overflow-x: hidden; 
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+        h1, h2 { font-family: 'DM Serif Display', serif !important; font-weight: 400; }
+        p, a, span, li, div { font-family: 'Urbanist', sans-serif !important; }
+
+        main, section, .sticky-section, .seccion-superpuesta, .experiencia-container {
+            background-color: transparent !important;
+        }
+
+        .linea-creciente {
+            height: 2px; width: 80px; margin: 20px 0; transition: width 0.6s ease-in-out; background-color: #C06C46;
+        }
+        .sticky-section:hover .linea-creciente { width: 150px; }
+
+        /* --- 2. ESTRUCTURA REPARADA --- */
+        .sticky-section { 
+            width: 100%; 
+            padding: 8% 5%; 
+            position: relative; 
+            box-sizing: border-box;
+            overflow: visible !important;
+        }
+        
+        .contenedor-interno { width: 100%; max-width: 1300px; margin: 0 auto; position: relative; z-index: 5; }
+        .seccion-superpuesta { position: relative; z-index: 2; }
+
+        /* --- 3. REPARACIÓN DEL BLOB GIGANTE --- */
+        .blob-fondo { position: absolute; top: -15%; left: -5%; width: 45vw; max-width: 500px; opacity: 0.4; z-index: 0; pointer-events: none; }
+        /* Deco Plato eliminado de aquí a pedido */
+        .deco-rustica { position: absolute; pointer-events: none; opacity: 0.25; z-index: 15; }
+        .deco-sm { width: 60px; } .deco-md { width: 110px; }
+        .etiqueta-deco { font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; display: block; margin-bottom: 10px; }
+
+        /* --- 4. SISTEMA DE GRILLAS PARA ORDENAR EL CONTENIDO --- */
+        .origen-grid-limpio { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; align-items: center; }
+        .cocina-grid-3 { display: grid; grid-template-columns: 1fr 350px 1fr; gap: 40px; align-items: center; }
+        .ambiente-grid-completo { display: grid; grid-template-columns: 1fr 380px 1fr; gap: 50px; align-items: center; }
+        .corp-grid-container { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: center; }
+        
+        /* CENTRADO TOTAL EN SECCIÓN 03 (AMBIENTE) */
+        .ambiente-grid-completo > div:first-child {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+            height: 100% !important;
+        }
+        .ambiente-grid-completo > div:first-child .linea-creciente { margin: 20px auto !important; }
+        .ambiente-grid-completo > div:first-child p { margin: 0 auto 20px auto !important; }
+
+        /* CENTRADO DEFINITIVO SECCIÓN 04 (UBICACIÓN) - CÓDIGO DEL USUARIO */
+        .texto-centro { 
+            display: flex !important; 
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important; 
+            margin: 0 auto !important; 
+            width: 100% !important; 
+        }
+        .texto-centro .linea-creciente { 
+            margin: 20px auto !important; 
+        }
+        .datos-ubicacion-fila {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .texto-centro .datos-ubicacion-fila { 
+            justify-content: center !important; 
+        }
+
+        .marco-video-rectangular-origen { width: 100%; aspect-ratio: 16/9; border-radius: 15px; overflow: hidden; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .marco-video-rectangular-origen video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .marco-reel-recto { width: 100%; aspect-ratio: 9/16; border-radius: 200px 200px 15px 15px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .marco-reel-recto video { width: 100%; height: 100%; object-fit: cover; }
+
+        .marco-video-dome-ambiente { width: 100%; aspect-ratio: 10/14; border-radius: 200px 200px 20px 20px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.4); position: relative; z-index: 1;}
+        .marco-video-dome-ambiente video { width: 100%; height: 100%; object-fit: cover; }
+
+        .corp-video-box { width: 100%; aspect-ratio: 4/5; border-radius: 200px 200px 15px 15px; overflow: hidden; }
+        .corp-video-box video { width: 100%; height: 100%; object-fit: cover; }
+
+        .marco-mapa-grande { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); width: 100%; margin-top: 30px; }
+
+        .cocina-col-platos, .ambiente-col-icons { display: flex; flex-direction: column; gap: 20px; }
+        .plato-item, .ambiente-item { display: flex; align-items: center; gap: 15px; font-weight: 600; letter-spacing: 1px; color: inherit; }
+        .plato-icon, .ambiente-icon { width: 30px; height: 30px; }
+        
+        .guion-superpuesto-origen { position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 5px; width: 250px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10; color: #1A2621;}
+        .corp-review-box { background: #C06C46; color: white; padding: 20px; border-radius: 8px; margin-top: -30px; position: relative; z-index: 3; width: 80%; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .corp-features-box { display: flex; align-items: center; gap: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; margin-bottom: 30px; }
+        
+        .btn-linea { display: inline-block; padding: 12px 25px; border: 1px solid; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; margin-right: 10px; margin-bottom: 10px; color: inherit;}
+        .btn-linea:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+        .mancha-base-video { position: absolute; width: 140%; bottom: -10%; left: 50%; transform: translateX(-50%); z-index: 0; }
+
+        .espiga-lateral { position: absolute; fill: none; stroke: #915235c0; stroke-width: 2; z-index: 1; }
+        .espiga-izq { left: -80px; top: 50%; transform: translateY(-50%) rotate(-15deg); width: 120px; }
+        .espiga-der { right: -60px; bottom: 10%; transform: rotate(20deg); width: 110px; }
+
+        .custom-divider { width: 100%; line-height: 0; margin-top: -5px; }
+        .custom-divider svg { width: 100%; height: 60px; }
+        
+        /* --- 5. MONTAÑA Y FOOTER ORIGINALES CON ANIMACIÓN --- */
+        .footer-divider-montana { width: 100%; line-height: 0; margin-top: -5px; position: relative; z-index: 10; }
+        .footer-divider-montana svg { width: 100%; height: 80px; display: block; }
+        .mountain-base { fill: #1A2621; } 
+        .mountain-texture { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 1; }
+
+        footer.footer-section { background-color: #1A2621; color: white; padding: 40px 5% 20px; position: relative; z-index: 10; }
+        footer.footer-section a { color: inherit !important; text-decoration: none; }
+
+        .social-links-minimal a, .links-col a {
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+        .social-links-minimal a:hover, .links-col a:hover { opacity: 1; }
+        
+        /* Animación de línea blanca */
+        .social-links-minimal a::after, .links-col a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -3px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .social-links-minimal a:hover::after, .links-col a:hover::after { width: 100%; }
+
+        .footer-desc { max-width: 300px; line-height: 1.6; }
+        .links-col h3, .contact-col h3 { color: #C06C46; margin-bottom: 20px; font-size: 1.3rem; }
+        .social-links-minimal { display: flex; gap: 20px; flex-wrap: wrap; }
+
+        /* REPARACIÓN DEL ZOOM EXAGERADO EN EL MENÚ HAMBURGUESA */
+        .nav-menu.active {
+            transform: scale(1) translate(0) !important;
+            font-size: 1.1rem !important;
+        }
+
+        @media (max-width: 1024px) {
+            .origen-grid-limpio, .cocina-grid-3, .ambiente-grid-completo, .corp-grid-container { grid-template-columns: 1fr; text-align: center; }
+            .marco-reel-recto, .marco-video-dome-ambiente, .corp-video-box { margin: 0 auto; max-width: 350px; }
+            .cocina-col-platos, .ambiente-col-icons { align-items: center; text-align: left;}
+            .guion-superpuesto-origen { position: relative; bottom: 0; right: 0; margin: 20px auto 0; width: 90%; }
+            .corp-review-box { margin: 0 auto; }
+            .blob-fondo, .deco-rustica, .espiga-lateral { display: none; }
+            .sticky-section { padding: 60px 5%; }
+            .datos-ubicacion-fila { display: flex; flex-direction: column; gap: 15px; }
+            .social-links-minimal { justify-content: center; margin-top: 15px;}
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo-area">
+                <img src="assets/logo.png" alt="Logo Los Álamos" class="logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="close-btn">×</div>
+                <a href="#hero" class="nav-link">Inicio</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#experiencia" class="nav-link">Experiencia</a>
+                <a href="carta.html" class="nav-link">Carta</a>
+                <a href="corporativo.html" class="nav-link">Eventos Corporativos</a>
+                <a href="https://api.whatsapp.com/send/?phone=51969898911" class="nav-link" style="color: #C06C46 !important; font-weight: bold;">Reservar Mesa</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="https://api.whatsapp.com/send/?phone=51969898911" class="btn-pill" target="_blank">Reservar Mesa</a>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="badge-rustico">#NuestraPasiónTuSatisfacción</span>
+                    <h1 class="hero-title" style="font-size: 5rem; line-height: 1;">Tradición en<br>cada bocado</h1>
+                    
+                    <p class="hero-description" style="margin: 20px 0; font-size: 1.2rem;">
+                        Disfruta del auténtico sabor en el corazón de Pilcomayo.
+                        Donde la elegancia rústica se encuentra con la mejor sazón huancaína.
+                    </p>
+
+                    <div class="hero-buttons" style="display: flex; gap: 15px;">
+                        <a href="carta.html" class="btn-primary">Ver la Carta</a>
+                        <a href="https://api.whatsapp.com/send/?phone=51969898911" class="btn-secondary" target="_blank">Reservar</a>
+                     </div>
+                </div>
+            </div>
+
+            <div class="custom-divider">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path class="divider-stroke" d="M0,120 L250,110 L450,120 L600,80 L750,95 L900,20 L1200,30 L1200,120 Z" fill="none"></path>
+                    <path class="divider-fill" d="M0,120 L250,110 L450,120 L600,80 L750,95 L900,20 L1200,30 L1200,120 Z" fill="#F2EFE9"></path>
+                </svg>
+            </div>
+        </section>
+
+        <section id="nosotros" class="sticky-section" data-color="#F2EFE9" data-text="#2C3E36">
+            <svg class="espiga-lateral espiga-izq" viewBox="0 0 100 200"><path d="M50,200 L50,0 M50,40 L20,10 M50,40 L80,10 M50,80 L20,50 M50,80 L80,50 M50,120 L20,90 M50,120 L80,90 M50,160 L20,130 M50,160 L80,130"/></svg>
+            <svg class="espiga-lateral espiga-der" viewBox="0 0 100 200"><path d="M50,200 L50,0 M50,40 L20,10 M50,40 L80,10 M50,80 L20,50 M50,80 L80,50 M50,120 L20,90 M50,120 L80,90 M50,160 L20,130 M50,160 L80,130"/></svg>
+
+            <div class="contenedor-interno origen-grid-limpio">
+                <div>
+                    <span class="etiqueta-deco" style="color: #C06C46;">01. ORIGEN</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1; margin-top: 15px; margin-bottom: 25px;">Más que un restaurante,<br>un legado familiar</h2>
+                    <div class="linea-creciente"></div>
+                    <p style="font-size: 1.1rem; max-width: 400px; line-height: 1.6;">
+                        En Los Álamos, cada rincón tiene una historia que comenzó en Pilcomayo y hoy es un santuario gastronómico.
+                    </p>
+                </div>
+
+                <div class="marco-video-rectangular-origen">
+                    <video autoplay muted loop playsinline>
+                        <source src="assets/video-origen.mp4" type="video/mp4">
+                    </video>
+                    <div class="guion-superpuesto-origen">
+                        <p class="etiqueta-deco" style="color:#C06C46; font-size: 0.65rem; margin-bottom: 5px;">ENTREVISTA, OLTURSA 2013</p>
+                        <p style="font-size: 0.85rem; line-height: 1.3; margin: 0;">
+                            50 años de tradición en el Valle del Mantaro. Un establecimiento especializado en comida regional, nacional e internacional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deco-rustica deco-md" style="bottom: 5%; left: 2%;">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="#C06C46" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#C06C46" stroke-width="1" stroke-dasharray="2,4"/>
+                    <circle cx="50" cy="50" r="2" fill="#C06C46"/>
+                </svg>
+            </div>
+        </section>
+
+        <section class="sticky-section seccion-superpuesta" data-color="#1A2621" data-text="#FFFFFF">
+            <svg class="blob-fondo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#8C5535" d="M45.7,-76.3C58.9,-69.3,69.1,-55.3,76.5,-40.7C83.8,-26.1,88.2,-10.8,87.3,4.2C86.4,19.2,80.1,33.9,71.2,46.2C62.3,58.6,50.7,68.6,37.3,74.9C24,81.1,8.9,83.6,-5.5,81.2C-19.8,78.8,-33.3,71.6,-45.5,62.3C-57.7,53.1,-68.6,41.7,-75.6,28.2C-82.6,14.6,-85.7,-1.1,-82.6,-15.7C-79.6,-30.3,-70.5,-43.8,-58.6,-52.3C-46.7,-60.8,-32.1,-64.3,-18.2,-67.2C-4.3,-70.2,8.9,-72.6,22.4,-75C35.9,-77.3,49.7,-79.6,45.7,-76.3Z" transform="translate(100 100)" />
+            </svg>
+
+            <div class="contenedor-interno cocina-grid-3">
+                <div>
+                    <span class="etiqueta-deco" style="color: #C06C46;">02. COCINA</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1; margin-top: 15px; margin-bottom: 20px;">El arte del<br>fuego y la leña</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Aquí cambia la atmósfera. Nuestros hornos no se apagan. Desde el amanecer, preparamos el fuego que dará vida a la Pachamanca.</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 40px;">Ingredientes locales y paciencia. La verdadera cocina no se apresura.</p>
+                    <a href="carta.html" class="btn-linea" style="border-color: currentColor;">Ver Propuesta →</a>
+                </div>
+
+                <div>
+                    <div class="marco-reel-recto">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/video-cocina.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="cocina-col-platos">
+                    <div class="plato-item">
+                        <svg class="plato-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10c0 5 2.5 9 7 9s7-4 7-9H5z" /><rect x="4" y="8" width="16" height="2" rx="1" /><path d="M10 8V5a2 2 0 0 1 4 0v3" /><path d="M9 3v1 M15 3v1 M12 2v2" /></svg>
+                        <span>PACHAMANCA</span>
+                    </div>
+                    <div class="plato-item">
+                        <svg class="plato-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18 M3 15h18 M9 4v16 M15 4v16" /></svg>
+                        <span>CARNERO AL PALO</span>
+                    </div>
+                    <div class="plato-item">
+                        <svg class="plato-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="6" ry="2" /><path d="M6 6v12c0 1.5 2.5 2.5 6 2.5s6-1 6-2.5V6" /><path d="M6 11H3v4h3 M18 11h3v4h-3" /><path d="M11 4V2h2v2" /></svg>
+                        <span>POLLO AL CILINDRO</span>
+                    </div>
+                    <div class="plato-item">
+                        <svg class="plato-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="9" rx="1" /><path d="M3 12h18" /><circle cx="7" cy="19" r="2" /><circle cx="17" cy="19" r="2" /></svg>
+                        <span>PANCETA A LA CAJA CHINA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deco-rustica deco-sm" style="top: 15%; right: 5%; transform: rotate(15deg);">
+                <svg viewBox="0 0 50 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25,100 L25,10 Q25,0 35,10 Q25,20 25,40 Q15,30 15,40 Q25,50 25,70" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="25" cy="20" r="2" fill="currentColor"/>
+                </svg>
+            </div>
+        </section>
+
+        <section id="experiencia" class="sticky-section seccion-superpuesta" data-color="#A65E44" data-text="#F2EFE9">
+            <div class="contenedor-interno ambiente-grid-completo">
+                
+                <div>
+                    <span class="etiqueta-deco" style="color: #F2EFE9; opacity: 1; letter-spacing: 3px;">03. AMBIENTE</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1; margin-top: 15px; margin-bottom: 20px; color: #442020 !important; text-shadow: 2px 2px 8px rgba(0,0,0,0.2);">Desconecta<br>para volver<br>a conectar</h2>
+                    <div class="linea-creciente" style="background-color: #F2EFE9;"></div>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px; max-width: 400px; color: #F2EFE9 !important;">Rodeado de naturaleza. Un espacio <strong>diseñado para que las horas pasen lento</strong>, entre buena comida y la mejor compañía.</p>
+                    <a href="https://api.whatsapp.com/send/?phone=51969898911" class="btn-linea" target="_blank" style="border-color: #F2EFE9; color: #F2EFE9 !important;">Reservar</a>
+                </div>
+
+                <div style="position: relative;">
+                    <svg class="mancha-base-video" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#8F4632" d="M42.7,-63.3C57.6,-53.6,73.5,-44.6,80.7,-30.5C87.9,-16.4,86.4,2.9,79.5,19.3C72.5,35.7,60.1,49.2,46.1,57.1C32.1,65,16,67.3,0.3,66.8C-15.4,66.3,-30.9,63.1,-43.3,54C-55.7,44.9,-65.1,30.1,-69.8,14.1C-74.4,-1.8,-74.3,-18.8,-66.6,-32.2C-58.9,-45.6,-43.6,-55.4,-29.3,-64.8C-15.1,-74.2,-1.9,-83.2,11.5,-85.7C24.9,-88.1,38.3,-84,42.7,-63.3Z" transform="translate(100 100) scale(1.1)" />
+                    </svg>
+
+                    <div class="marco-video-dome-ambiente">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/video-ambiente.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="ambiente-col-icons">
+                    <div class="ambiente-item">
+                        <svg class="ambiente-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l10-8 10 8" /><path d="M4 11v10h16V11" /><path d="M10 21v-6h4v6" /><path d="M4 11l8-4 8 4" opacity="0.5" /><path d="M8 14h2 M14 14h2" /></svg>
+                        <span>CHOZAS</span>
+                    </div>
+                    <div class="ambiente-item">
+                        <svg class="ambiente-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 1 1 2-7.5 4.5 4.5 0 1 1 5 6.5" /><path d="M12 13v7" /><path d="M15 17h5v3 M15 14h5v3 M15 17v3" /><path d="M19 8c-.5.5-1 1-1 2 M21 11c-.5.5-.5 1.5 0 2" opacity="0.8" /></svg>
+                        <span>ÁREA VERDE</span>
+                    </div>
+                    <div class="ambiente-item">
+                        <svg class="ambiente-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14c0-2 12-2 12 0v3c0 1-12 1-12 0v-3z" /><path d="M8 17v4 M16 17v4" /><path d="M4 14V8h2v6 M20 14V8h-2v6" /><path d="M12 11V7 M10 9v-2 M14 9v-2 M10 9h4" /></svg>
+                        <span>SALÓN</span>
+                    </div>
+                    <div class="ambiente-item">
+                        <svg class="ambiente-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V10a8 8 0 0 1 16 0v12" /><path d="M8 22v-8a4 4 0 0 1 8 0v8" /><path d="M4 22l4-4 M20 22l-4-4 M9 22v-3 M15 22v-3" opacity="0.6" /><path d="M6 13v2 M18 13v2" /></svg>
+                        <span>PASILLO</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deco-rustica deco-md" style="top: 40%; left: -20px;">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="8,8"/>
+                    <path d="M50,5 L50,15 M95,50 L85,50 M50,95 L50,85 M5,50 L15,50" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+        </section>
+
+        <section id="corporativo" class="sticky-section seccion-superpuesta" data-color="#1A2621" data-text="#F2EFE9">
+            <div class="contenedor-interno corp-grid-container">
+                
+                <div>
+                    <div class="corp-video-box">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/video-corporativo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <div class="corp-review-box">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px;">
+                            <span>Altamente Recomendado</span>
+                            <span class="stars">★★★★★</span>
+                        </div>
+                        <p style="font-size: 0.95rem; line-height: 1.4; margin: 0;">El lugar perfecto para fortalecer lazos. Equipos de Huancayo confían en nuestra atención y gastronomía para sus eventos.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="etiqueta-deco" style="color: #C06C46;">Propuesta Empresarial</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1; margin-top: 15px; margin-bottom: 20px;">Desconecta para<br>conectar mejor</h2>
+                    
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
+                        Cambia la oficina por el valle. Ofrecemos el espacio ideal para almuerzos de camaradería, reuniones estratégicas y celebraciones de fin de año.
+                    </p>
+
+                    <div class="corp-features-box">
+                        <div>
+                            <span class="feature-number">100+</span>
+                            <span style="font-size: 0.85rem; display: block; margin-top: 5px;">Capacidad<br>Personas</span>
+                        </div>
+                        <div class="feature-divider"></div>
+                        <div>
+                            <span style="color:#C06C46; font-weight: bold;">Servicio Integral</span>
+                            <p style="font-size: 0.95rem; margin-top: 5px; line-height: 1.4;">Eventos personalizados, áreas verdes exclusivas y emisión de factura electrónica para tu empresa.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <a href="corporativo.html" class="btn-linea" style="border-color: currentColor;">Ver Paquetes →</a>
+                        <a href="https://wa.me/51969898911" class="btn-linea" target="_blank" style="border-color: currentColor;">Cotizar al WhatsApp 💬</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deco-rustica deco-md" style="bottom: 10%; right: 2%;">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,4"/>
+                    <circle cx="50" cy="50" r="2" fill="currentColor"/>
+                </svg>
+            </div>
+        </section>
+
+        <section id="ubicacion" class="sticky-section seccion-superpuesta" data-color="#F2EFE9" data-text="#2C3E36">
+            <div class="contenedor-interno">
+                <div class="texto-centro">
+                    <span class="etiqueta-deco" style="color: #C06C46;">04. Ubicación</span>
+                    <h2 style="font-size: 3.5rem; margin-top: 10px;">Todos los caminos<br>llevan al sabor</h2>
+                    <div class="linea-creciente" style="background-color: #C06C46; margin: 20px auto;"></div>
+                    <p style="max-width: 700px; margin: 0 auto;">Estamos a solo 15 minutos del centro de Huancayo. Un escape rápido de la ciudad para disfrutar la calma del valle.</p>
+                    
+                    <div class="datos-ubicacion-fila">
+                        <div class="dato-item">
+                            <p><strong>📍 Dirección:</strong> Av. Las Américas 1080, Cruce de Pilcomayo</p>
+                        </div>
+                        <div class="dato-item">
+                            <p><strong>🚗 Estacionamiento:</strong> Privado y gratuito</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marco-mapa-grande">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5447.725453998078!2d-75.24468025071242!3d-12.05116738340482!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910e96087ae08d71%3A0xd03ef93614441e09!2sLos%20%C3%81lamos%20De%20Pilcomayo!5e0!3m2!1ses!2spe!4v1771268657595!5m2!1ses!2spe" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-divider-montana seccion-superpuesta">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="mountain-base" d="M0,120 L0,40 Q300,100 600,50 Q900,0 1200,60 L1200,120 Z"/>
+                <path class="mountain-texture" d="M150,85 Q350,105 550,70" />
+                <path class="mountain-texture" d="M700,45 Q900,20 1100,55" />
+                <path class="mountain-texture" d="M850,30 Q950,5 1050,35" />
+            </svg>
+        </div>
+
+        <footer id="contacto" class="footer-section seccion-superpuesta">
+            <div class="contenedor-interno">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;">
+                    <div class="footer-col brand-col">
+                        <img src="assets/logo.png" alt="Los Álamos" style="width: 150px; filter: brightness(0) invert(1);">
+                        <p class="footer-desc" style="opacity: 0.7; margin-top: 15px; line-height: 1.6;">
+                            Tradición, naturaleza y sabor inconfundible. El refugio gastronómico de Pilcomayo.
+                        </p>
+                    </div>
+
+                    <div class="footer-col links-col">
+                        <h3 style="color: #C06C46; margin-bottom: 15px;">Explorar</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li><a href="#hero" style="color: white; text-decoration: none;">Inicio</a></li>
+                            <li><a href="#nosotros" style="color: white; text-decoration: none;">Historia</a></li>
+                            <li><a href="carta.html" style="color: white; text-decoration: none;">Carta</a></li>
+                            <li><a href="#experiencia" style="color: white; text-decoration: none;">Experiencia</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col contact-col">
+                        <h3 style="color: #C06C46; margin-bottom: 15px;">Visítanos</h3>
+                        <div style="margin-bottom: 15px;">
+                            <p><strong>📍 Dirección:</strong> Av. Las Américas 1080<br>Cruce de Pilcomayo, Perú</p>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <p><strong>📞 Teléfono:</strong> <a href="tel:+51969898911" style="color: white; text-decoration: none; font-weight: bold;">+51 969 898 911</a></p>
+                        </div>
+                        <div>
+                            <p><strong>✉️ Correo:</strong> <a href="mailto:losalamosdepilcomayo@gmail.com" style="color: white; text-decoration: none;">losalamos@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <p style="opacity: 0.5; margin: 0;">© 2026 Los Álamos de Pilcomayo. Todos los derechos reservados.</p>
+                    
+                    <div class="social-links-minimal">
+                        <a href="https://www.facebook.com/alamosdepilcomayo" target="_blank" rel="noopener noreferrer">Facebook</a>
+                        <a href="https://www.instagram.com/alamosdepilcomayo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="https://www.tiktok.com/@losalamosdepilcomayo" target="_blank" rel="noopener noreferrer">TikTok</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const body = document.body;
+            const secciones = document.querySelectorAll('.sticky-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bgColor = entry.target.getAttribute('data-color');
+                        const textColor = entry.target.getAttribute('data-text');
+                        if (bgColor) body.style.backgroundColor = bgColor;
+                        if (textColor) body.style.color = textColor;
+                    }
+                });
+            }, { threshold: 0.3, rootMargin: "-10% 0px -50% 0px" });
+            secciones.forEach(section => observer.observe(section));
+
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+            const closeBtn = document.querySelector(".close-btn");
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            if (hamburger && navMenu) {
+                const closeMenu = () => {
+                    hamburger.classList.remove("active");
+                    navMenu.classList.remove("active");
+                };
+                hamburger.addEventListener("click", () => {
+                    hamburger.classList.toggle("active");
+                    navMenu.classList.toggle("active");
+                });
+                if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+                navLinks.forEach(link => link.addEventListener("click", closeMenu));
+            }
+        });
+    </script>
+</body>
+</html>
